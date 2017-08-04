@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-with tf.device('cpu:0'):
+with tf.device('cpu:0'):                        #通过这句代码将程序运行在cpu上
     state = tf.Variable(0,name='counter')
 
     #print(state.name)
