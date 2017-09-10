@@ -70,7 +70,7 @@ prediction = tf.nn.softmax(tf.matmul(h_fc1_drop,W_fc2) + b_fc2)
 sess = tf.Session()
 #sess.run(tf.global_variables_initializer())        #读取参数时不需要初始化
 saver = tf.train.Saver()
-saver.restore(sess,"./lesson_13_saver.ckpt")
+saver.restore(sess,"./lesson_08_saver.ckpt")
 
 
 #OPENCV部分
