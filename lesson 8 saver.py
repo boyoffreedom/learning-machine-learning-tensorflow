@@ -80,5 +80,5 @@ for i in range(1000):
         print("training step %d accuracy is %f" %(i ,compute_accuracy(
             test_batch[0], test_batch[1])))
 saver = tf.train.Saver()
-save_path = saver.save(sess,"./lesson_13_saver.ckpt")
+save_path = saver.save(sess,"./lesson_8_saver.ckpt")
 print("Save to path",save_path)
