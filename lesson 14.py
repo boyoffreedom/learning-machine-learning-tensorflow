@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 #from tensorflow.examples.tutorials.mnist import input_data
 drawing = False #鼠标按下为真
+CLOSE_FLAG = 0
 #mnist = input_data.read_data_sets('MNIST_data',one_hot=True)
 
 #计算精确度函数
@@ -67,7 +68,7 @@ b_fc2 = bias_variable([10])
 prediction = tf.nn.softmax(tf.matmul(h_fc1_drop,W_fc2) + b_fc2)
 
 sess = tf.Session()
-#sess.run(tf.global_variables_initializer())
+#sess.run(tf.global_variables_initializer())        #读取参数时不需要初始化
 saver = tf.train.Saver()
 saver.restore(sess,"./lesson_13_saver.ckpt")
 
@@ -87,22 +88,26 @@ img = np.zeros((200,200,1),np.uint8)
 img[:,:] = 0
 cv2.namedWindow('input')
 cv2.setMouseCallback('input',draw_circle)
-print("请用鼠标绘制一个数字")
-while(1):
-    cv2.imshow('input',img)
-    if cv2.waitKey(20) & 0xFF == 13:
-        break
-#图像大小数据类型转换
-res=cv2.resize(img,(28,28),interpolation=cv2.INTER_CUBIC)
-res = res.astype(np.float32)
-res = res/255
-res = res.reshape((1,784))
-result = sess.run(prediction, feed_dict={xs:res,keep_prob:1.0})
-_position = np.argmax(result)
-print("您写的数字是:",_position)
-print("按回车键再识别一次，或按ESC键退出数字识别")
-while(1):
-    cv2.imshow('input',img)
-    if cv2.waitKey(20) & 0xFF == 27:
-        break
+while(CLOSE_FLAG == 0):
+    print("\n\n\n\n\n请用鼠标绘制一个数字")
+    while(1):
+        cv2.imshow('input',img)
+        if cv2.waitKey(20) & 0xFF == 13:
+            break
+    #图像大小数据类型转换
+    res=cv2.resize(img,(28,28),interpolation=cv2.INTER_CUBIC)
+    res = res.astype(np.float32)
+    res = res/255
+    res = res.reshape((1,784))
+    result = sess.run(prediction, feed_dict={xs:res,keep_prob:1.0})
+    _position = np.argmax(result)
+    print("您写的数字是:",_position)
+    print("按回车键再识别一次，或按ESC键退出数字识别")
+    while(1):
+        if cv2.waitKey(20) & 0xFF == 27:
+            CLOSE_FLAG = 1
+            break
+        elif cv2.waitKey(20) & 0xff == 13:
+            img[:,:] = 0
+            break
 cv2.destroyAllWindows()
