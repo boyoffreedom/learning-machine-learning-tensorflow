@@ -5,6 +5,8 @@ import numpy as np
 #from tensorflow.examples.tutorials.mnist import input_data
 drawing = False #鼠标按下为真
 CLOSE_FLAG = 0
+P_x = 0
+P_y = 0
 #mnist = input_data.read_data_sets('MNIST_data',one_hot=True)
 
 #计算精确度函数
@@ -75,12 +77,16 @@ saver.restore(sess,"./lesson_08_saver.ckpt")
 
 #OPENCV部分
 def draw_circle(event,x,y,flags,param):
-    global drawing
+    global drawing,P_x,P_y
     if event == cv2.EVENT_LBUTTONDOWN:
         drawing = True
+        P_x = x
+        P_y = y
     elif event == cv2.EVENT_MOUSEMOVE:
         if drawing == True:
-            cv2.circle(img,(x,y),5,255,-1)
+            cv2.line(img,(P_x,P_y),(x,y),255,2)
+            P_x = x
+            P_y = y
     elif event == cv2.EVENT_LBUTTONUP:
         drawing = False
 
