@@ -84,7 +84,7 @@ def draw_circle(event,x,y,flags,param):
         P_y = y
     elif event == cv2.EVENT_MOUSEMOVE:
         if drawing == True:
-            cv2.line(img,(P_x,P_y),(x,y),255,2)
+            cv2.line(img,(P_x,P_y),(x,y),255,15)
             P_x = x
             P_y = y
     elif event == cv2.EVENT_LBUTTONUP:
@@ -112,6 +112,7 @@ while(CLOSE_FLAG == 0):
         result = sess.run(prediction, feed_dict={xs:res,keep_prob:1.0})
         _position = np.argmax(result)
         print("您写的数字是:",_position)
+        print("可能性降序排列:",np.argsort(-result))
         print("按回车键再识别一次，或按ESC键退出数字识别")
     while(1):
         if cv2.waitKey(20) & 0xFF == 27:
