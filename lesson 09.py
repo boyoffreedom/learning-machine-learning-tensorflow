@@ -94,6 +94,9 @@ while(CLOSE_FLAG == 0):
         cv2.imshow('input',img)
         if cv2.waitKey(20) & 0xFF == 13:
             break
+        elif cv2.waitKey(20) & 0xff == 27:
+            CLOSE_FLAG = 1
+            break
     #图像大小数据类型转换
     res=cv2.resize(img,(28,28),interpolation=cv2.INTER_CUBIC)
     res = res.astype(np.float32)
