@@ -72,10 +72,10 @@ train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
-for i in range(1000):
+for i in range(2001):
     batch_xs,batch_ys = mnist.train.next_batch(100)
-    sess.run(train_step,feed_dict = {xs:batch_xs,ys:batch_ys,keep_prob:1.0})
-    if i%50==0:
+    sess.run(train_step,feed_dict = {xs:batch_xs,ys:batch_ys,keep_prob:0.5})
+    if i%500==0:
         test_batch = mnist.test.next_batch(100)
         print("training step %d accuracy is %f" %(i ,compute_accuracy(
             test_batch[0], test_batch[1])))
