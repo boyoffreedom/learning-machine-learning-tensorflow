@@ -97,15 +97,16 @@ while(CLOSE_FLAG == 0):
         elif cv2.waitKey(20) & 0xff == 27:
             CLOSE_FLAG = 1
             break
-    #图像大小数据类型转换
-    res=cv2.resize(img,(28,28),interpolation=cv2.INTER_CUBIC)
-    res = res.astype(np.float32)
-    res = res/255
-    res = res.reshape((1,784))
-    result = sess.run(prediction, feed_dict={xs:res,keep_prob:1.0})
-    _position = np.argmax(result)
-    print("您写的数字是:",_position)
-    print("按回车键再识别一次，或按ESC键退出数字识别")
+    if CLOSE_FLAG == 0:
+        #图像大小数据类型转换
+        res=cv2.resize(img,(28,28),interpolation=cv2.INTER_CUBIC)
+        res = res.astype(np.float32)
+        res = res/255
+        res = res.reshape((1,784))
+        result = sess.run(prediction, feed_dict={xs:res,keep_prob:1.0})
+        _position = np.argmax(result)
+        print("您写的数字是:",_position)
+        print("按回车键再识别一次，或按ESC键退出数字识别")
     while(1):
         if cv2.waitKey(20) & 0xFF == 27:
             CLOSE_FLAG = 1
@@ -113,4 +114,5 @@ while(CLOSE_FLAG == 0):
         elif cv2.waitKey(20) & 0xff == 13:
             img[:,:] = 0
             break
+print("退出程序")
 cv2.destroyAllWindows()
