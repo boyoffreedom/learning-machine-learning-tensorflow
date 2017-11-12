@@ -2,7 +2,7 @@ import numpy as np
 
 class Layer(object):
     def __init__(self,input_nodes,output_nodes,active_function = 'relu'):        #生成一层BP神经网络
-        self.w = np.random.normal(0.0,1.0,(input_nodes,output_nodes))
+        self.w = np.random.normal(0.05,1.0,(input_nodes,output_nodes))
         self.b = 0.1*np.ones((output_nodes,1))
         self.active_function = active_function
         
